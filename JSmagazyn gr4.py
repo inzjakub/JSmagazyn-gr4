@@ -3,15 +3,9 @@ import streamlit as st
 # Tytuł aplikacji
 st.title("📦 Prosty Magazyn")
 
-# --- DODANIE MIKOŁAJA ---
-# Mikołaj zostanie wyświetlony na górze, aby nie zakłócać działania aplikacji.
-# Używamy st.image() z adresem URL, co jest najbezpieczniejszą metodą.
-st.image("https://openclipart.org/image/400px/11821", caption="Ho Ho Ho!", width=100)
-
-
-# --- LOGIKA APLIKACJI (Kod z Twojej pierwszej, działającej wersji) ---
-
 # 1. INICJALIZACJA STANU (SESSION STATE)
+# Streamlit odświeża kod przy każdej akcji. Aby lista produktów nie znikała,
+# musimy ją przechowywać w tzw. session_state.
 if 'magazyn' not in st.session_state:
     st.session_state.magazyn = []
 
@@ -21,6 +15,7 @@ nazwa_produktu = st.text_input("Wpisz nazwę produktu:")
 
 if st.button("Dodaj produkt"):
     if nazwa_produktu:
+        # Dodajemy produkt do listy w stanie sesji
         st.session_state.magazyn.append(nazwa_produktu)
         st.success(f"Dodano: {nazwa_produktu}")
     else:
@@ -40,6 +35,7 @@ if len(st.session_state.magazyn) > 0:
     st.write("---")
     
     # Usuwanie produktu
+    # Selectbox pozwala wybrać produkt z istniejącej listy
     produkt_do_usuniecia = st.selectbox(
         "Wybierz produkt do usunięcia:", 
         options=st.session_state.magazyn
